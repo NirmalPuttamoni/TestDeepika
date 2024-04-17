@@ -1,0 +1,22 @@
+.profilePic {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    max-width: 200px; /* Adjust the value as needed */
+    max-height: 200px; /* Adjust the value as needed */
+    width: auto;
+    height: auto;
+  }
+  .profileContainer {
+    display: flex;
+    margin: 20px;
+  }
+  @media only screen and (max-width: 768px) {
+    .profileContainer {
+      flex-direction: column-reverse;
+    }
+  }
+
+  
+  
