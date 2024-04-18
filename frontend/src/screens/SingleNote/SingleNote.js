@@ -10,10 +10,8 @@ import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 
 function SingleNote() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const { id } = useParams();
-  const noteList = useSelector((state) => state.noteList);
-  const { loading, error, notes } = noteList;
 
   const [note, setNote] = useState({
     title: "",
@@ -28,7 +26,7 @@ function SingleNote() {
   const { loading: loadingUpdate, error: errorUpdate } = noteUpdate;
 
   const noteDelete = useSelector((state) => state.noteDelete);
-  const { loading: loadingDelete, error: errorDelete } = noteDelete;
+  const { error: errorDelete } = noteDelete;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,9 +75,9 @@ function SingleNote() {
         <Card.Header>Edit your Note</Card.Header>
         <Card.Body>
           <Form onSubmit={updateHandler}>
-          {errorDelete && (
-        <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
-      )}
+            {errorDelete && (
+              <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
+            )}
             {errorUpdate && <ErrorMessage variant="danger">{errorUpdate}</ErrorMessage>}
             {errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
             <Form.Group controlId="title">
@@ -124,9 +122,9 @@ function SingleNote() {
             <Button variant="primary" type="submit" className="mx-2">
               Update Note
             </Button>
-            <Button variant="danger" 
-            onClick={() => deleteHandler(note._id)}
->
+            <Button variant="danger"
+              onClick={() => deleteHandler(note._id)}
+            >
               Delete Note
             </Button>
           </Form>

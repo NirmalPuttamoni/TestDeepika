@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import { useDispatch, useSelector } from "react-redux";
 import { register } from '../../actions/userActions';
-import axios from 'axios';
 import Loading from '../../components/Loading';
 import {  useNavigate } from 'react-router-dom';
 const RegisterScreen = () => {

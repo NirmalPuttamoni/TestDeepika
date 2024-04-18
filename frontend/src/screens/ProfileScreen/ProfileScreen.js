@@ -11,15 +11,15 @@ import { updateProfile } from '../../actions/userActions'
 import Col from 'react-bootstrap/esm/Col'
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
-const ProfileScreen = ({location}) => {
-  const navigate=useNavigate();
+const ProfileScreen = () => {
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pic, setPic] = useState();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [picMessage, setPicMessage] = useState();
+  const [picMessage] = useState();
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
 
@@ -41,50 +41,10 @@ const ProfileScreen = ({location}) => {
     }
   }, [navigate, userInfo]);
 
-  const postDetails=(pics)=>
-  {
-    if(!pics)
-    {
-      return setPicMessage("please select an image")
-    }
-    setPicMessage(null)
-    if(pics.type==='image/jpeg'|| pics.type==='image/png')
-    {
-      const data=new FormData();
-      data.append('file',pics)
-      data.append('upload_preset',"NoteZipperweb");
-      fetch("https://api.cloudinary.com/v1_1/dxqisz3zw/image/upload" ,{
-        method:"post",
-        body:data,
-  
-      })
-      .then((res) => 
-      {
-  
-        console.log("Cloudinary response:", res); // Log the Cloudinary response here
-        return res.json();
-  
-  
-  
-      })
-      .then((data) => {
-        console.log("Cloudinary data:", data); // Log the parsed JSON data here
-        setPic(data.url.toString());
-  
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  
-    }
-    else{
-      return setPicMessage("Please Select an Image");
-    }
-  }
-  
+
   const submitHandler = (e) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       setPasswordMismatch(true);
       return;
@@ -94,15 +54,15 @@ const ProfileScreen = ({location}) => {
 
     dispatch(updateProfile({ name, email, password, pic }));
 
-    
+
 
 
   };
 
   return (
-  <MainScreen title='EDIT PROFILE'>
-    <div>
-    <Row className="profileContainer">
+    <MainScreen title='EDIT PROFILE'>
+      <div>
+        <Row className="profileContainer">
           <Col md={6}>
             <Form onSubmit={submitHandler}>
               {loading && <Loading />}
@@ -140,25 +100,25 @@ const ProfileScreen = ({location}) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="confirmPassword">
-  <Form.Label>Confirm Password</Form.Label>
-  <Form.Control
-    type="password"
-    placeholder="Confirm Password"
-    value={confirmPassword}
-    onChange={(e) => setConfirmPassword(e.target.value)}
-  />
-  {/* Error message for password mismatch */}
-  {passwordMismatch && (
-    <ErrorMessage variant="danger">Passwords do not match</ErrorMessage>
-  )}
-</Form.Group>
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {/* Error message for password mismatch */}
+                {passwordMismatch && (
+                  <ErrorMessage variant="danger">Passwords do not match</ErrorMessage>
+                )}
+              </Form.Group>
 
               {" "}
               {picMessage && (
                 <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
               )}
 
-{/* <Form.Group controlId="formFile" className="mb-3">
+              {/* <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Profile Picture</Form.Label>
         <Form.Control
                 type="file"
@@ -171,7 +131,7 @@ const ProfileScreen = ({location}) => {
 
       </Form.Group> */}
 
-      <Button type="submit" varient="primary" className="mb-3">
+              <Button type="submit" varient="primary" className="mb-3">
                 Update
               </Button>
 
@@ -187,8 +147,8 @@ const ProfileScreen = ({location}) => {
             {/* <img src={pic} alt={name} className="profilePic" /> */}
           </Col>
         </Row>
-    </div>
-  </MainScreen>
+      </div>
+    </MainScreen>
   )
 }
 
